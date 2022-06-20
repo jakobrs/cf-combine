@@ -75,7 +75,7 @@ impl RegexContext {
             if let Some(matches) = self.re.captures(line) {
                 let new_module_name = &matches[2];
 
-                let (file_path, dir_path) = resolve(dir, this_module_name, &matches[1])
+                let (file_path, dir_path) = resolve(dir, this_module_name, new_module_name)
                     .context("Resolving module path")?
                     .context("Unable to resolve module path")?;
 
@@ -86,7 +86,9 @@ impl RegexContext {
 
                 let recursive_output = self.process(&dir_path, new_module_name, &mod_contents)?;
 
-                output += &matches[1];
+                if let Some(modifiers) = matches.get(1) {
+                    output += modifiers.as_str();
+                }
                 output += "mod ";
                 output += new_module_name;
                 output += " {\n";
