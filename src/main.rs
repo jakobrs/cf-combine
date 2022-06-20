@@ -64,7 +64,7 @@ struct RegexContext {
 impl RegexContext {
     fn new() -> Result<Self> {
         Ok(Self {
-            re: Regex::new(r"^(pub(?:\([a-z:]*\))? )?mod ([a-z_]*);").context("Parsing regex")?,
+            re: Regex::new(r"^(pub(?:\([a-z:]*\))? )?mod ([a-z_]*);$").context("Parsing regex")?,
         })
     }
 
