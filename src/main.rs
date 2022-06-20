@@ -77,7 +77,7 @@ impl RegexContext {
 
                 let (file_path, dir_path) = resolve(dir, this_module_name, new_module_name)
                     .context("Resolving module path")?
-                    .context("Unable to resolve module path")?;
+                    .with_context(|| format!("Unable to resolve module path for module \"{new_module_name}\" in module \"{this_module_name}\""))?;
 
                 let mut mod_contents = String::new();
                 let mut file = File::open(&file_path).context("Opening module")?;
